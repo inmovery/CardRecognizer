@@ -48,6 +48,8 @@ public class MainActivity extends Activity {
 
     private TextRecognizer detector;
 
+    private CardInfoParser cardInfoParser;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,7 @@ public class MainActivity extends Activity {
         detector = new TextRecognizer.Builder(getApplicationContext()).build();
         scanResults = (TextView) findViewById(R.id.results);
 
+        cardInfoParser = new CardInfoParser();
 
         mResultLabel = (TextView) findViewById(R.id.result);
         mResultImage = (ImageView) findViewById(R.id.result_image);
@@ -128,6 +131,16 @@ public class MainActivity extends Activity {
         }
 
         scanResults.setText(lines + "\n");
+
+        CardInfo cardInfo = cardInfoParser.parse(lines);
+
+        if ((requestCode == REQUEST_SCAN || requestCode == REQUEST_AUTOTEST) && data != null
+                && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
+            CreditCard result = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
+            if (result != null) {
+                cardInfo.merge(result);
+            }
+        }
 
         Log.d("\nVision:","\n"+lines);
 
