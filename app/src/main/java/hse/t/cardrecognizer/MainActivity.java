@@ -56,7 +56,6 @@ public class MainActivity extends Activity {
         detector = new TextRecognizer.Builder(getApplicationContext()).build();
         scanResults = (TextView) findViewById(R.id.results);
 
-
         mResultLabel = (TextView) findViewById(R.id.result);
         mResultImage = (ImageView) findViewById(R.id.result_image);
         mResultCardTypeImage = (ImageView) findViewById(R.id.result_card_type_image);
@@ -66,8 +65,16 @@ public class MainActivity extends Activity {
     public void onScan(View pressed) {
         Intent intent = new Intent(this, CardIOActivity.class)
                 .putExtra(CardIOActivity.EXTRA_SCAN_EXPIRY, true)
-                .putExtra(CardIOActivity.EXTRA_REQUIRE_CARDHOLDER_NAME, true)
+                .putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, true)
                 .putExtra(CardIOActivity.EXTRA_SUPPRESS_CONFIRMATION, true)
+                .putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, true)
+                .putExtra(CardIOActivity.EXTRA_REQUIRE_POSTAL_CODE, true)
+                .putExtra(CardIOActivity.EXTRA_REQUIRE_CARDHOLDER_NAME, true)
+                .putExtra(CardIOActivity.EXTRA_USE_PAYPAL_ACTIONBAR_ICON, false)
+                .putExtra(CardIOActivity.EXTRA_SUPPRESS_MANUAL_ENTRY, false)
+                .putExtra(CardIOActivity.EXTRA_USE_CARDIO_LOGO, false)
+                .putExtra(CardIOActivity.EXTRA_SUPPRESS_SCAN, false)
+                .putExtra(CardIOActivity.EXTRA_HIDE_CARDIO_LOGO, true)
                 .putExtra(CardIOActivity.EXTRA_RETURN_CARD_IMAGE, true);
 
         startActivityForResult(intent, REQUEST_SCAN);
@@ -96,13 +103,10 @@ public class MainActivity extends Activity {
 
                 CardType cardType = result.getCardType();
                 cardTypeImage = cardType.imageBitmap(this);
+
                 outStr += "Тип карты: " + cardType.name() + "\n";
 
                 outStr += "Срок действия: " + result.expiryMonth + "/" + result.expiryYear + "\n";
-
-                outStr += "CVV: " + result.cvv + "\n";
-
-                outStr += "Почтовый индекс: " + result.postalCode + "\n";
 
                 outStr += "Имя владельца карты: " + result.cardholderName + "\n";
 
