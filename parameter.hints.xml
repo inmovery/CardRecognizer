@@ -1,0 +1,9 @@
+<application>
+  <component name="ParameterNameHintsSettings">
+    <blacklists>
+      <blacklist language="Java">
+        <added pattern="rf.permonlain.permkray.Adapters.RecyclerViewAdapter.RecyclerViewAdapter(mContext,mData)" />
+      </blacklist>
+    </blacklists>
+  </component>
+</application>
