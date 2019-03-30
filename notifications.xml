@@ -1,0 +1,5 @@
+<application>
+  <component name="NotificationConfiguration">
+    <notification groupId="Find Problems" displayType="STICKY_BALLOON" />
+  </component>
+</application>
