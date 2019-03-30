@@ -95,57 +95,45 @@ public class MainActivity extends Activity {
                 && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
             CreditCard result = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
             if (result != null) {
-                outStr += "Номер карты: " + result.getFormattedCardNumber() + "\n";
+
+                Bitmap card = CardIOActivity.getCapturedCardImage(data);
+
+                Frame frame = new Frame.Builder().setBitmap(card).build();
+                SparseArray<TextBlock> textBlocks = detector.detect(frame);
+
+                mResultImage.setImageBitmap(card);
+                mResultCardTypeImage.setImageBitmap(cardTypeImage);
+
+                String lines = "";
+                for (int index = 0; index < textBlocks.size(); index++) {
+                    //извлечение данных
+                    TextBlock tBlock = textBlocks.valueAt(index);
+
+                    for (Text line : tBlock.getComponents()) {
+                        lines = lines + line.getValue() + "\n";
+                    }
+                }
+
+                scanResults.setText(lines + "\n");
+
+                CardInfo cardInfo = cardInfoParser.parse(lines);
+                cardInfo.merge(result);
+
+                outStr += "Номер карты: " + cardInfo.cardBankNumber + "\n";
 
                 CardType cardType = result.getCardType();
                 cardTypeImage = cardType.imageBitmap(this);
                 outStr += "Тип карты: " + cardType.name() + "\n";
 
-                outStr += "Срок действия: " + result.expiryMonth + "/" + result.expiryYear + "\n";
+                outStr += "Срок действия: " + cardInfo.cardExpirationDate + "\n";
 
-                outStr += "CVV: " + result.cvv + "\n";
+                outStr += "Имя владельца карты: " + cardInfo.cardHolder + "\n";
 
-                outStr += "Почтовый индекс: " + result.postalCode + "\n";
+                Log.d("\nVision:","\n"+lines);
+                Log.i(TAG, "\nCard.io: \n" + outStr);
 
-                outStr += "Имя владельца карты: " + result.cardholderName + "\n";
-
+                mResultLabel.setText(outStr);
             }
         }
-
-        Bitmap card = CardIOActivity.getCapturedCardImage(data);
-
-        Frame frame = new Frame.Builder().setBitmap(card).build();
-        SparseArray<TextBlock> textBlocks = detector.detect(frame);
-
-        mResultImage.setImageBitmap(card);
-        mResultCardTypeImage.setImageBitmap(cardTypeImage);
-
-        String lines = "";
-        for (int index = 0; index < textBlocks.size(); index++) {
-            //извлечение данных
-            TextBlock tBlock = textBlocks.valueAt(index);
-
-            for (Text line : tBlock.getComponents()) {
-                lines = lines + line.getValue() + "\n";
-            }
-        }
-
-        scanResults.setText(lines + "\n");
-
-        CardInfo cardInfo = cardInfoParser.parse(lines);
-
-        if ((requestCode == REQUEST_SCAN || requestCode == REQUEST_AUTOTEST) && data != null
-                && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
-            CreditCard result = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
-            if (result != null) {
-                cardInfo.merge(result);
-            }
-        }
-
-        Log.d("\nVision:","\n"+lines);
-
-        Log.i(TAG, "\nCard.io: \n" + outStr);
-
-        mResultLabel.setText(outStr);
     }
 }
