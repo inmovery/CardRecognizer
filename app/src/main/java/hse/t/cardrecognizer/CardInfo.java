@@ -66,4 +66,20 @@ public class CardInfo {
             }
         }
     }
+
+    public String formatedBankCardNumber() {
+        String space = "  ";
+
+        String formated = insert(cardBankNumber, space, 4);
+        formated = insert(formated, space, 8 + 2);
+        formated = insert(formated, space, 12 + 4);
+
+        return formated;
+    }
+
+    private String insert(String bag, String marble, int index) {
+        String bagBegin = bag.substring(0,index);
+        String bagEnd = bag.substring(index);
+        return bagBegin + marble + bagEnd;
+    }
 }

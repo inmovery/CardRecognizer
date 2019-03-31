@@ -58,12 +58,11 @@ public class MainActivity extends Activity {
         detector = new TextRecognizer.Builder(getApplicationContext()).build();
         scanResults = (TextView) findViewById(R.id.results);
 
-        cardInfoParser = new CardInfoParser();
+        cardInfoParser = new CardInfoParser(getResources());
 
         mResultLabel = (TextView) findViewById(R.id.result);
         mResultImage = (ImageView) findViewById(R.id.result_image);
         mResultCardTypeImage = (ImageView) findViewById(R.id.result_card_type_image);
-
     }
 
     public void onScan(View pressed) {
@@ -127,7 +126,11 @@ public class MainActivity extends Activity {
                 CardInfo cardInfo = cardInfoParser.parse(lines);
                 cardInfo.merge(result);
 
-                outStr += "Номер карты: " + cardInfo.cardBankNumber + "\n";
+                if (cardInfo.bankLogo != null) {
+                    mResultCardTypeImage.setImageBitmap(cardInfo.bankLogo);
+                }
+
+                outStr += "Номер карты: " + cardInfo.formatedBankCardNumber() + "\n";
 
                 CardType cardType = result.getCardType();
                 cardTypeImage = cardType.imageBitmap(this);
