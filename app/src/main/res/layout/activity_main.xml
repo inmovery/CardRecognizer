@@ -135,14 +135,15 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/save_vary"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:text="Сохранить"
+        android:text="Запасной вариант"
         android:textFontWeight="50"
         android:background="#1aa1ff"
         android:layout_gravity="bottom"
         android:textAlignment="center"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:textColor="#fff"/>
 
 </android.support.design.widget.CoordinatorLayout>

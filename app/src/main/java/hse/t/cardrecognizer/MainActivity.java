@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mKindCard;
     private ImageView mKindBank;
 
+    private Button mButtonSave;
+
     private TextRecognizer detector;
 
     private CardInfoParser cardInfoParser;
@@ -99,9 +103,9 @@ public class MainActivity extends AppCompatActivity {
         return COMMON.clone();
     }
 
-    private int brightness = 0;
-    private float contrast = 2;
-    private float saturation = 2;
+    private int brightness = 20;
+    private float contrast = 5;
+    private float saturation = 5;
 
     public Bitmap addStyleToBitmap(Context context, Bitmap bitmap){
 
@@ -138,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     private static float[] getMatrixByMode(float saturation) {
         float[] targetMatrix = common();
 
-        targetMatrix = rgbToBgr();//blackAndWhite();
+        targetMatrix = blackAndWhite();//rgbToBgr();
 
         return targetMatrix;
     }
@@ -167,6 +171,16 @@ public class MainActivity extends AppCompatActivity {
         mNameHolder = (TextView)findViewById(R.id.text_card_holder);
         mKindBank = (ImageView) findViewById(R.id.kind_bank);
         mKindCard = (ImageView) findViewById(R.id.kind_card);
+
+        mButtonSave = (Button)findViewById(R.id.save_vary);
+
+        mButtonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent board = new Intent(MainActivity.this,ResponseActivity.class);
+                startActivity(board);
+            }
+        });
 
         onScan();
 
@@ -236,18 +250,6 @@ public class MainActivity extends AppCompatActivity {
 //                mResultImage.setImageBitmap(card);
 //                mResultCardTypeImage.setImageBitmap(cardTypeImage);
 
-                String lines2 = "";
-                for (int index = 0; index < textBlocks.size(); index++) {
-                    //извлечение данных
-                    TextBlock tBlock = textBlocks2.valueAt(index);
-
-                    for (Text line : tBlock.getComponents()) {
-                        lines2 = lines2 + line.getValue() + "\n";
-                    }
-                }
-
-                Log.d("\nBlack:","\n"+lines2);
-
 
                 CardInfo cardInfo = cardInfoParser.parse(lines);
                 cardInfo.merge(result);
@@ -272,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
                 mExpiredDate.setText(cardInfo.cardExpirationDate);
 
                 outStr += "Имя владельца карты: " + cardInfo.cardHolder + "\n";
-                //...
+                mNameHolder.setText(cardInfo.cardHolder);
 
                 Log.i(TAG, "\nCard.io: \n" + outStr);
 
@@ -281,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
