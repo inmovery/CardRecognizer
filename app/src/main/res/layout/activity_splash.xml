@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashActivity"
+    android:layout_gravity="center_horizontal">
+
+    <LinearLayout
+        android:id="@+id/scanning"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/scan"
+            android:layout_height="70dp"
+            android:background="@drawable/btn_box"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="Сканировать"
+            android:textColor="#ffffff"
+            android:textFontWeight="50"
+            android:textSize="30dp"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/space"
+        android:layout_below="@+id/scanning"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#26000000"/>
+
+    <LinearLayout
+        android:layout_below="@+id/space"
+        android:id="@+id/story_scan"
+        android:layout_width="match_parent"
+        android:background="#f9f9f9"
+        android:layout_height="47dp">
+        <TextView
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="История сканирования"
+            android:paddingLeft="16dp"
+            android:paddingTop="11dp"
+            android:textColor="#3f3f3f"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/story_scan"
+        android:id="@+id/block_one"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/cio_ic_mastercard"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="12dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="left">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#4a4a4a"
+                    android:text="4556 2344 9897 2344"
+                    android:textSize="14sp"/><!-- #627182-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#868686"
+                    android:text="Месяц: 12/2023"
+                    android:textSize="12sp"/><!-- #627182-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:textColor="#868686"
+                    android:text="ELON MUSK"
+                    android:textSize="12sp"/><!-- #627182-->
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/block_two"
+        android:layout_below="@+id/block_one"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/cio_ic_mastercard"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="12dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="left">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#4a4a4a"
+                    android:text="5747 4577 3453 5465"
+                    android:textSize="14sp"/><!-- #627182-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#868686"
+                    android:text="Месяц: 03/2019"
+                    android:textSize="12sp"/><!-- #627182-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:textColor="#868686"
+                    android:text="MARK ZUCKERBERG"
+                    android:textSize="12sp"/><!-- #627182-->
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/block_three"
+        android:layout_below="@+id/block_two"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/cio_ic_visa"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="12dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="left">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#4a4a4a"
+                    android:text="4343 3450 5433 9884"
+                    android:textSize="14sp"/><!-- #627182-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#868686"
+                    android:text="Месяц: 01/2021"
+                    android:textSize="12sp"/><!-- #627182-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:textColor="#868686"
+                    android:text="PAVEL DUROV"
+                    android:textSize="12sp"/><!-- #627182-->
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/block_four"
+        android:layout_below="@+id/block_three"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/cio_ic_mastercard"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="12dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="left">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#4a4a4a"
+                    android:text="3466 4566 0983 3458"
+                    android:textSize="14sp"/><!-- #627182-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#868686"
+                    android:text="Месяц: 10/2019"
+                    android:textSize="12sp"/><!-- #627182-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:textColor="#868686"
+                    android:text="JEFF BEZOS"
+                    android:textSize="12sp"/><!-- #627182-->
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
