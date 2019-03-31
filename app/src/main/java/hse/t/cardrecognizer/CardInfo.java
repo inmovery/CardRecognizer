@@ -29,6 +29,15 @@ public class CardInfo {
     }
 
     public Boolean isFuelCard() {
+
+        if (cardNumber == null) {
+            return false;
+        }
+
+        if (cardBankNumber == null) {
+            return true;
+        }
+
         return ((cardNumber.length() > 8) && cardBankNumber.isEmpty());
     }
 
@@ -68,11 +77,34 @@ public class CardInfo {
     }
 
     public String formatedBankCardNumber() {
+//        if (cardBankNumber == null) {
+//            return "";
+//        }
+//
+//        if (cardBankNumber.length() >= 16) {
+//            return "";
+//        }
+
         String space = " ";
 
         String formated = insert(cardBankNumber, space, 4);
         formated = insert(formated, space, 8 + 1);
         formated = insert(formated, space, 12 + 2);
+
+        return formated;
+    }
+
+    public String oilCardNumber() {
+        if (cardNumber == null) {
+            return "";
+        }
+
+        if (cardNumber.length() >= 10) {
+            return "";
+        }
+
+        String space = " ";
+        String formated = insert(cardNumber, space, 4);
 
         return formated;
     }
