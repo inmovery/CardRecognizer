@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                 outStr += "Тип карты: " + cardType.name() + "\n";
 
                 if(cardType.name() == "VISA") mKindCard.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.cio_ic_visa));
-                else if(cardType.name() == "MasterCard") mKindCard.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.cio_ic_mastercard));
+                else if(cardType.name() == "MASTERCARD") mKindCard.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.cio_ic_mastercard));
                 //else if(cardType.name() == "Maestro") mKindCard.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.maestro));
 
                 //mKindBank.setImageBitmap();
