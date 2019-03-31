@@ -14,7 +14,7 @@ public class CardInfoParser {
 
     private double garbageAccuracy = 0.75;
     private double paymentSystemAccuracy = 0.65;
-    private double bankLogoAccuracy = 0.65;
+    private double bankLogoAccuracy = 0.55;
     private String[] garbageWords =  {"valid", "thru", "cardholder", "name", "card"};
     private Map<String, CardInfo.PaymentSystem> paymentSytemWords = new HashMap<>();
     private Map<String, Bitmap> bankLogos = new HashMap<>();
