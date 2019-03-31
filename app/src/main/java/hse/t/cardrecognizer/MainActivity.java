@@ -1,10 +1,14 @@
 package hse.t.cardrecognizer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -61,6 +65,85 @@ public class MainActivity extends AppCompatActivity {
     private TextRecognizer detector;
 
     private CardInfoParser cardInfoParser;
+
+    private static final float[] BLACK_AND_WHITE = new float[] {
+            1.5F, 1.5F, 1.5F, 0, -255,
+            1.5F, 1.5F, 1.5F, 0, -255,
+            1.5F, 1.5F, 1.5F, 0, -255,
+            0, 0, 0, 1, 0,
+    };
+
+    public static final float[] blackAndWhite() {
+        return BLACK_AND_WHITE.clone();
+    }
+
+    private static final float[] RGB_TO_BGR = new float[] {
+            0, 0, 1, 0, 0,
+            0, 1, 0, 0, 0,
+            1, 0, 0, 0, 0,
+            0, 0, 0, 1, 0,
+    };
+
+    public static final float[] rgbToBgr() {
+        return RGB_TO_BGR.clone();
+    }
+
+    private static final float[] COMMON = new float[] {
+            1, 0, 0, 0, 0,
+            0, 1, 0, 0, 0,
+            0, 0, 1, 0, 0,
+            0, 0, 0, 1, 0
+    };
+
+    public static final float[] common() {
+        return COMMON.clone();
+    }
+
+    private int brightness = 0;
+    private float contrast = 2;
+    private float saturation = 2;
+
+    public Bitmap addStyleToBitmap(Context context, Bitmap bitmap){
+
+        Bitmap newBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(newBitmap);
+        context = context.getApplicationContext();
+
+        BitmapDrawable drawable = new BitmapDrawable(context.getResources(), bitmap);
+
+        drawable.setColorFilter(new ColorMatrixColorFilter(calculateMatrix(brightness, contrast, saturation)));
+        drawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        drawable.draw(canvas);
+
+        return newBitmap;
+
+    }
+
+    private static float[] calculateMatrix(int brightness, float contrast, float saturation) {
+        return applyBrightnessAndContrast(getMatrixByMode(saturation), brightness, contrast);
+    }
+
+    private static float[] applyBrightnessAndContrast(float[] matrix, int brightness, float contrast) {
+        float t = (1.0F - contrast) / 2.0F * 255.0F;
+        for (int i = 0; i < 3; i++) {
+            for (int j = i * 5; j < i * 5 + 3; j++) {
+                matrix[j] *= contrast;
+            }
+            matrix[5 * i + 4] += t + brightness;
+        }
+        return matrix;
+    }
+
+    private static float[] getMatrixByMode(float saturation) {
+        float[] targetMatrix = common();
+
+        targetMatrix = rgbToBgr();//blackAndWhite();
+
+        return targetMatrix;
+    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -145,7 +228,26 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-//                scanResults.setText(lines + "\n");
+                Bitmap arn = addStyleToBitmap(getApplicationContext(),card);
+
+                Frame frame2 = new Frame.Builder().setBitmap(card).build();
+                SparseArray<TextBlock> textBlocks2 = detector.detect(frame2);
+
+//                mResultImage.setImageBitmap(card);
+//                mResultCardTypeImage.setImageBitmap(cardTypeImage);
+
+                String lines2 = "";
+                for (int index = 0; index < textBlocks.size(); index++) {
+                    //извлечение данных
+                    TextBlock tBlock = textBlocks2.valueAt(index);
+
+                    for (Text line : tBlock.getComponents()) {
+                        lines2 = lines2 + line.getValue() + "\n";
+                    }
+                }
+
+                Log.d("\nBlack:","\n"+lines2);
+
 
                 CardInfo cardInfo = cardInfoParser.parse(lines);
                 cardInfo.merge(result);
@@ -158,9 +260,9 @@ public class MainActivity extends AppCompatActivity {
 
                 outStr += "Тип карты: " + cardType.name() + "\n";
 
-                if(cardType.name() == "VISA") mKindCard.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.cio_ic_visa));
-                else if(cardType.name() == "MASTERCARD") mKindCard.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.cio_ic_mastercard));
-                //else if(cardType.name() == "Maestro") mKindCard.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.maestro));
+                if(cardInfo.cardPaymentSystem == CardInfo.PaymentSystem.VISA) mKindCard.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.cio_ic_visa));
+                else if(cardInfo.cardPaymentSystem == CardInfo.PaymentSystem.MASTERCARD) mKindCard.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.cio_ic_mastercard));
+                else if(cardInfo.cardPaymentSystem == CardInfo.PaymentSystem.MAESTRO) mKindCard.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.maestro));
 
                 if (cardInfo.bankLogo != null) {
                     mKindBank.setImageBitmap(cardInfo.bankLogo);
@@ -191,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_reset:
-                //обновление
+                onScan();
                 return true;
             case android.R.id.home:
                 finish();
