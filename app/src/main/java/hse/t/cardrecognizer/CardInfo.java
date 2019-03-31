@@ -77,13 +77,13 @@ public class CardInfo {
     }
 
     public String formatedBankCardNumber() {
-        if (cardBankNumber == null) {
-            return "";
-        }
-
-        if (cardBankNumber.length() >= 16) {
-            return "";
-        }
+//        if (cardBankNumber == null) {
+//            return "";
+//        }
+//
+//        if (cardBankNumber.length() >= 16) {
+//            return "";
+//        }
 
         String space = " ";
 

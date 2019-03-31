@@ -250,6 +250,18 @@ public class MainActivity extends AppCompatActivity {
 //                mResultImage.setImageBitmap(card);
 //                mResultCardTypeImage.setImageBitmap(cardTypeImage);
 
+                String lines2 = "";
+                for (int index = 0; index < textBlocks.size(); index++) {
+                    //извлечение данных
+                    TextBlock tBlock = textBlocks2.valueAt(index);
+
+                    for (Text line : tBlock.getComponents()) {
+                        lines2 = lines2 + line.getValue() + "\n";
+                    }
+                }
+
+                Log.d("\nBlack:","\n"+lines2);
+
 
                 CardInfo cardInfo = cardInfoParser.parse(lines);
                 cardInfo.merge(result);
