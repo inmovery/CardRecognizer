@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        scanResults = (TextView) findViewById(R.id.results);
 
-        cardInfoParser = new CardInfoParser();
+        cardInfoParser = new CardInfoParser(getResources());
 
 //        mResultLabel = (TextView) findViewById(R.id.result);
 //        mResultImage = (ImageView) findViewById(R.id.result_image);
@@ -150,7 +150,11 @@ public class MainActivity extends AppCompatActivity {
                 CardInfo cardInfo = cardInfoParser.parse(lines);
                 cardInfo.merge(result);
 
-                outStr += "Номер карты: " + cardInfo.cardBankNumber + "\n";
+                if (cardInfo.bankLogo != null) {
+                    mResultCardTypeImage.setImageBitmap(cardInfo.bankLogo);
+                }
+
+                outStr += "Номер карты: " + cardInfo.formatedBankCardNumber() + "\n";
 
                 mCardNumber.setText(cardInfo.cardBankNumber);
 

@@ -1,5 +1,8 @@
 package hse.t.cardrecognizer;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
 import java.util.HashMap;
@@ -11,15 +14,24 @@ public class CardInfoParser {
 
     private double garbageAccuracy = 0.75;
     private double paymentSystemAccuracy = 0.65;
+    private double bankLogoAccuracy = 0.65;
     private String[] garbageWords =  {"valid", "thru", "cardholder", "name", "card"};
     private Map<String, CardInfo.PaymentSystem> paymentSytemWords = new HashMap<>();
+    private Map<String, Bitmap> bankLogos = new HashMap<>();
 
-    public CardInfoParser() {
+    public CardInfoParser(Resources resources) {
 
         // Fill payment systems
         paymentSytemWords.put("visa", CardInfo.PaymentSystem.VISA);
         paymentSytemWords.put("master", CardInfo.PaymentSystem.MASTERCARD);
         paymentSytemWords.put("maestro", CardInfo.PaymentSystem.MAESTRO);
+
+        // Fill bank logos
+        bankLogos.put("alfa", BitmapFactory.decodeResource(resources, R.drawable.alfa));
+        bankLogos.put("cbepeank", BitmapFactory.decodeResource(resources, R.drawable.sberbank));
+        bankLogos.put("raiffeisen", BitmapFactory.decodeResource(resources, R.drawable.raiffeisen));
+        bankLogos.put("otkr poket", BitmapFactory.decodeResource(resources, R.drawable.otkrytie));
+        bankLogos.put("tinkoff", BitmapFactory.decodeResource(resources, R.drawable.tinkoff));
     }
 
     public CardInfo parse(String text) {
@@ -36,9 +48,11 @@ public class CardInfoParser {
 
         String cardHolder = getCardHolder(text);
 
+        Bitmap bankLogo = getBankLogo(text);
+
         CardInfo.PaymentSystem paymentSystem = getPaymentSystem(text);
 
-        return new CardInfo(cardNumber, cardBankNumber, cardHolder, cardExpirationDate, paymentSystem);
+        return new CardInfo(cardNumber, cardBankNumber, cardHolder, cardExpirationDate, paymentSystem, bankLogo);
     }
 
     private String[] getWords(String rawText) {
@@ -139,6 +153,24 @@ public class CardInfoParser {
         }
 
         return "";
+    }
+
+    private Bitmap getBankLogo(String rawText) {
+        String[] words = getWords(rawText);
+
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+
+            for (String bankWord : bankLogos.keySet()) {
+                double similarity = StringSimilarity.similarity(word, bankWord);
+
+                if (similarity >= bankLogoAccuracy) {
+                    return bankLogos.get(bankWord);
+                }
+            }
+        }
+
+        return null;
     }
 
     public String capitalize(String string) {
