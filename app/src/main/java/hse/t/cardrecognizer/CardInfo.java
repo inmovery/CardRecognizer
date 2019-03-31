@@ -1,5 +1,7 @@
 package hse.t.cardrecognizer;
 
+import android.graphics.Bitmap;
+
 import io.card.payment.CardType;
 import io.card.payment.CreditCard;
 
@@ -14,14 +16,16 @@ public class CardInfo {
     public String cardHolder;
     public String cardExpirationDate;
     public PaymentSystem cardPaymentSystem;
+    public Bitmap bankLogo;
     //public BufferedImage logo;
 
-    public CardInfo(String number, String bankNumber, String holder, String expirationDate, PaymentSystem paymentSystem) {
+    public CardInfo(String number, String bankNumber, String holder, String expirationDate, PaymentSystem paymentSystem, Bitmap logo) {
         cardNumber = number;
         cardBankNumber = bankNumber;
         cardHolder = holder;
         cardExpirationDate = expirationDate;
         cardPaymentSystem = paymentSystem;
+        bankLogo = logo;
     }
 
     public Boolean isFuelCard() {
