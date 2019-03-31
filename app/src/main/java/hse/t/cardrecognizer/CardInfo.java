@@ -68,7 +68,7 @@ public class CardInfo {
     }
 
     public String formatedBankCardNumber() {
-        String space = "  ";
+        String space = " ";
 
         String formated = insert(cardBankNumber, space, 4);
         formated = insert(formated, space, 8 + 2);

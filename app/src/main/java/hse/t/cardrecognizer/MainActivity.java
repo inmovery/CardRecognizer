@@ -150,16 +150,11 @@ public class MainActivity extends AppCompatActivity {
                 CardInfo cardInfo = cardInfoParser.parse(lines);
                 cardInfo.merge(result);
 
-                if (cardInfo.bankLogo != null) {
-                    mResultCardTypeImage.setImageBitmap(cardInfo.bankLogo);
-                }
-
                 outStr += "Номер карты: " + cardInfo.formatedBankCardNumber() + "\n";
 
-                mCardNumber.setText(cardInfo.cardBankNumber);
+                mCardNumber.setText(cardInfo.formatedBankCardNumber());
 
                 CardType cardType = result.getCardType();
-//                cardTypeImage = cardType.imageBitmap(this);
 
                 outStr += "Тип карты: " + cardType.name() + "\n";
 
@@ -167,7 +162,9 @@ public class MainActivity extends AppCompatActivity {
                 else if(cardType.name() == "MASTERCARD") mKindCard.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.cio_ic_mastercard));
                 //else if(cardType.name() == "Maestro") mKindCard.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.maestro));
 
-                //mKindBank.setImageBitmap();
+                if (cardInfo.bankLogo != null) {
+                    mKindBank.setImageBitmap(cardInfo.bankLogo);
+                }
 
                 outStr += "Срок действия: " + cardInfo.cardExpirationDate + "\n";
                 mExpiredDate.setText(cardInfo.cardExpirationDate);
