@@ -1,19 +1,19 @@
 <toolSet name="NDK">
-  <tool name="javah" description="javah" showInMainMenu="false" showInEditor="false" showInProject="false" showInSearchPopup="false" disabled="false" useConsole="true" showConsoleOnStdOut="true" showConsoleOnStdErr="true" synchronizeAfterRun="true">
+  <tool name="javah" description="javah" showInMainMenu="false" showInEditor="false" showInProject="false" showInSearchPopup="false" disabled="true" useConsole="true" showConsoleOnStdOut="true" showConsoleOnStdErr="true" synchronizeAfterRun="true">
     <exec>
       <option name="COMMAND" value="$JDKPath$/bin/javah" />
       <option name="PARAMETERS" value="-classpath$Classpath$-v-jni$FileClass$" />
       <option name="WORKING_DIRECTORY" value="$SourcepathEntry$/../jni" />
     </exec>
   </tool>
-  <tool name="ndk-build" description="ndk-build" showInMainMenu="false" showInEditor="false" showInProject="false" showInSearchPopup="false" disabled="false" useConsole="true" showConsoleOnStdOut="true" showConsoleOnStdErr="true" synchronizeAfterRun="true">
+  <tool name="ndk-build" description="ndk-build" showInMainMenu="false" showInEditor="false" showInProject="false" showInSearchPopup="false" disabled="true" useConsole="true" showConsoleOnStdOut="true" showConsoleOnStdErr="true" synchronizeAfterRun="true">
     <exec>
       <option name="COMMAND" value="C:\Users\clay.DESKTOP-JFB7SPD\AppData\Local\Android\Sdk\ndk-bundle\build\ndk-build" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$ProjectFileDir$/app/src/main" />
     </exec>
   </tool>
-  <tool name="ndk-build clean" description="ndk-build clean" showInMainMenu="false" showInEditor="false" showInProject="false" showInSearchPopup="false" disabled="false" useConsole="true" showConsoleOnStdOut="true" showConsoleOnStdErr="true" synchronizeAfterRun="true">
+  <tool name="ndk-build clean" description="ndk-build clean" showInMainMenu="false" showInEditor="false" showInProject="false" showInSearchPopup="false" disabled="true" useConsole="true" showConsoleOnStdOut="true" showConsoleOnStdErr="true" synchronizeAfterRun="true">
     <exec>
       <option name="COMMAND" value="C:\Users\clay.DESKTOP-JFB7SPD\AppData\Local\Android\Sdk\ndk-bundle\build\ndk-build" />
       <option name="PARAMETERS" value="clean" />
