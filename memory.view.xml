@@ -1,0 +1,6 @@
+<application>
+  <component name="MemoryViewSettings">
+    <option name="isShowTrackedOnly" value="true" />
+    <option name="isAutoUpdateModeOn" value="true" />
+  </component>
+</application>
