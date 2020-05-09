@@ -2,5 +2,6 @@
   <component name="NotificationConfiguration">
     <notification groupId="Build sync orphan modules" displayType="NONE" shouldLog="false" />
     <notification groupId="Find Problems" displayType="STICKY_BALLOON" />
+    <notification groupId="Gradle Notification Group" displayType="NONE" shouldLog="false" />
   </component>
 </application>
